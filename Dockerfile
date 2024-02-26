@@ -10,5 +10,7 @@ COPY . .
 RUN npm install
 # Build, compile the code, optimize, prepare for serving
 RUN npm run build
+
+EXPOSE 3000
 # Default cmd to run when container up, server
 CMD ["npm", "start"]

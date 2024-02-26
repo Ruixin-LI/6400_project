@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_DB: webport
+      POSTGRES_USER: webadmin
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+
+  web:
+    image: intro_db
+    volumes:
+      - ./pages:/usr/src/app/pages
+    environment:
+      DB_HOST: db
+      DB_NAME: webport
+      DB_USER: webadmin
+      DB_PASSWORD: 123456
+      DB_PORT: 5432
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+
+volumes:
+  db-data:
