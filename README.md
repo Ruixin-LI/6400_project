@@ -6,6 +6,10 @@ docker build -t intro_db .
 Next start the network, with:
 docker compose up -d
 
-The network should contain: a webserver, two mongoDB server, several clients
+To interact with database, start a shell in DB container and run: psql -h localhost -p 5432 -U webadmin -d webport
 
-For reuse purpose, change the client id and secret in ./pages/api/auth/[...nextauth].js, also chose another secret
+Check all database with: \l
+Select a database with: \c [database_name]
+See all tables in the database with: \dt
+
+The network should contain: a webserver, two mongoDB server, several clients

@@ -1,32 +1,69 @@
 version: '3.8'
 
 services:
-  db:
+  pgreMasterDB:
     image: postgres:latest
-    volumes:
-      - db-data:/var/lib/postgresql/data
-      - ./sql:/docker-entrypoint-initdb.d
+    container_name: postgres-master
     environment:
       POSTGRES_DB: webport
       POSTGRES_USER: webadmin
       POSTGRES_PASSWORD: 123456
+    volumes:
+      # - db-data:/var/lib/postgresql/data
+      - ./masterPostgre:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
+    networks:
+      - intranet
+
+  pgreReplicaDB:
+    image: postgres:latest
+    container_name: postgres-replica
+    environment:
+      POSTGRES_REPLICATION_MODE: replica
+      POSTGRES_USER: replica_user
+      POSTGRES_PASSWORD: 123456
+      PATH: /usr/lib/postgresql/16/bin:$PATH
+    depends_on:
+      - pgreMasterDB
+    volumes:
+    #   - replica-data:/var/lib/postgresql/data
+      - ./replicaPostgre:/init
+    entrypoint: /init/init-replica.sh
+    networks:
+      - intranet
 
   web:
     image: intro_db
     volumes:
       - ./pages:/usr/src/app/pages
     environment:
-      DB_HOST: db
+      DB_HOST: pgreMasterDB
       DB_NAME: webport
       DB_USER: webadmin
       DB_PASSWORD: 123456
       DB_PORT: 5432
     depends_on:
-      - db
+      - pgreMasterDB
     ports:
       - "3000:3000"
+    networks:
+      - intranet
+      - internet
 
-volumes:
-  db-data:
+# volumes:
+#   db-data:
+#   replica-data:
+networks:
+  intranet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/16
+  internet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/8
