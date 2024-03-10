@@ -22,9 +22,9 @@ psql -h localhost -p 5432 -U webadmin -d webport
 ```shell
 \c [database_name]
 ```
-See all tables in the database with:
+## See all tables in the database with:
 ```shell
 \dt
 ``` 
-
+## Result:
 The network should contain: a webserver, two mongoDB server, several clients
