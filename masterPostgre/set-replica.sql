@@ -1,5 +1,0 @@
--- CREATE ROLE replica_user REPLICATION LOGIN PASSWORD '123456';
--- ALTER SYSTEM SET wal_level = replica;
--- ALTER SYSTEM SET max_wal_senders = 3;
--- ALTER SYSTEM SET max_replication_slots = 3;
--- SELECT pg_reload_conf();
