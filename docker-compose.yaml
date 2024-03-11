@@ -3,7 +3,7 @@ version: '3.8'
 services:
   pgreMasterDB:
     image: postgres:latest
-    container_name: postgres-master
+    container_name: pgreMasterDB
     environment:
       POSTGRES_DB: webport
       POSTGRES_USER: webadmin
@@ -18,7 +18,7 @@ services:
 
   pgreReplicaDB:
     image: postgres:latest
-    container_name: postgres-replica
+    container_name: pgreReplicaDB
     environment:
       POSTGRES_REPLICATION_MODE: replica
       POSTGRES_USER: replica_user
