@@ -27,9 +27,10 @@ register_users() {
         IFS=, read -r USERNAME PASSWORD EMAIL <<< "$(generate_credentials)"
 
         # Curl command to post the data and record the traffic size and latency
-        curl -v -X POST -H "Content-Type: application/json" \
+        curl -s -X POST -H "Content-Type: application/json" \
             -d "{\"username\":\"${USERNAME}\", \"password\":\"${PASSWORD}\", \"email\":\"${EMAIL}\"}" \
             -w "$i,%{size_upload},%{size_download},%{time_total}\n" \
+            -o /dev/null \
             "$url" >> "$log_file"
     done
 }

@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   pgreMasterDB:
-    image: postgres:latest
+    image: db
     container_name: pgreMasterDB
     environment:
       POSTGRES_DB: webport
