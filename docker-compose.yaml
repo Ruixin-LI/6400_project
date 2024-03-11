@@ -2,22 +2,22 @@ version: '3.8'
 
 services:
   pgreMasterDB:
-    image: db
+    image: db:master
     container_name: pgreMasterDB
     environment:
       POSTGRES_DB: webport
       POSTGRES_USER: webadmin
       POSTGRES_PASSWORD: 123456
-    volumes:
-      # - db-data:/var/lib/postgresql/data
-      - ./masterPostgre:/docker-entrypoint-initdb.d
+    # volumes:
+    #   # - db-data:/var/lib/postgresql/data
+    #   # - ./masterPostgre:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
     networks:
       - intranet
 
   pgreReplicaDB:
-    image: postgres:latest
+    image: db:replica
     container_name: pgreReplicaDB
     environment:
       POSTGRES_REPLICATION_MODE: replica
@@ -26,9 +26,9 @@ services:
       PATH: /usr/lib/postgresql/16/bin:$PATH
     depends_on:
       - pgreMasterDB
-    volumes:
-    #   - replica-data:/var/lib/postgresql/data
-      - ./replicaPostgre:/init
+    # volumes:
+    #   #   - replica-data:/var/lib/postgresql/data
+    #   # - ./replicaPostgre:/init
     entrypoint: /init/init-replica.sh
     networks:
       - intranet

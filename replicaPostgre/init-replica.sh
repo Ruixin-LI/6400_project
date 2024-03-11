@@ -2,7 +2,7 @@
 set -e
 
 echo "Waiting for master to start..."
-while ! pg_isready -h postgres-master -p 5432 -U webadmin; do
+while ! pg_isready -h pgreMasterDB -p 5432 -U webadmin; do
   sleep 1
 done
 
