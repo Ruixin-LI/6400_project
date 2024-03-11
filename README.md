@@ -2,6 +2,10 @@
 ## Prerequisites
 - Ensure the current working directory contains `Dockerfile` and `docker-compose.yaml`.
 - All shell scripts should have execution permissions.
+- The current version use windows file format, which means line end is '\r\n', I was developing on mac which end line with '\n', I convert the syntax on every shell script with:
+```shell
+sed -i 's/\r$//' *.sh
+```
 ## Build docker image with cmd: 
 ```shell
 docker build -t intro_db .
