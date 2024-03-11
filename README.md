@@ -2,11 +2,11 @@
 ## Prerequisites
 - Ensure the current working directory contains `Dockerfile` and `docker-compose.yaml`.
 - All shell scripts should have execution permissions.
-- The end line character on linux and windows are different, on linux it is '\n' but on windows it is '\n\r'. So if you are using windows, check if the git is set to automatically convert line end character to windows still, check it with
+- The end line character on linux and windows are different, on linux it is '\n' but on windows it is '\n\r'. So if you are using windows, check if the git is set to automatically convert line end character to windows style, check it with
 ```shell
 git config core.autocrlf
 ```
-If that return true, means git will auto replace endline char for windows, and if you try to execute that file with linux shell it may cause trouble, remove all '\r' character with this cmd to run in linux:
+- If that return true, means git will auto replace endline char for windows, and if you try to execute that file with linux shell it may cause trouble, remove all '\r' character with this cmd to run in linux:
 ```shell
 sed -i 's/\r$//' *.sh
 ```
